@@ -2,6 +2,7 @@ const container = document.querySelector('#cardContainer')
 const input = document.querySelector('#inputId')
 const button = document.querySelector('#searchBtn')
 let cart = []
+let books = []
 
 function generateCard(book) {
     const cardContainer = document.createElement('div')
@@ -33,7 +34,7 @@ async function getBooks() {
         return books
 
     } catch (error) {
-        console.log(error);
+        console.log('Failed to load content', error);
     }
 }
 
@@ -54,7 +55,7 @@ async function filterBooks(query) {
 }
 
 function searchBooks() {
-    const searchTerms = document.querySelector("#searchBtn").value
+    const searchTerms = document.querySelector("#inputId").value
 
     container.innerHTML = ""
     for (let book of books) {
@@ -63,6 +64,8 @@ function searchBooks() {
         }
     }
 }
+
+
 
 input.addEventListener("change", async () => {
     console.log("changed");
