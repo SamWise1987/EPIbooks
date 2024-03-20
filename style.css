@@ -1,3 +1,7 @@
 .added.to.cart{
     border: 2px solid green
 }
+
+.selected {
+    background-color: grey; 
+}

@@ -72,4 +72,35 @@ async function filterBooks(query) {
 function searchBooks() {
     const searchTerms = document.querySelector("#inputId").value
 
-    co
+    container.innerHTML = ""
+    for (let book of books) {
+        if (book.title.toLowerCase().includes(searchTerms.toLowerCase())) {
+            generateCard(book)
+        }
+    }
+}
+
+
+
+input.addEventListener("change", async () => {
+    console.log("changed");
+    if (input.value === "") {
+        getBooks().then(books => {
+            books.map((book) => generateCard(book))
+        })
+    }
+})
+
+button.addEventListener("click", async () => {
+    container.innerHTML = "";
+    const searchTerms = input.value;
+    filterBooks(searchTerms).then(filteredBooks => {
+        filteredBooks.forEach(book => generateCard(book));
+    });
+});
+
+
+
+// il rallentamento è perchPé uso una async all'interno di un eventlistner e
+//creare delle funzioni dedicat agli eventlistner
+// dovrei astrarre i then in altr funzioni fuori dagli eventlistner e lancerà roba sincrona 
