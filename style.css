@@ -1,7 +1,15 @@
-.added.to.cart{
-    border: 2px solid green
+.added-to-cart{
+    border: 2px solid green;
+    background-color: green;
 }
 
 .selected {
     background-color: grey; 
+}
+
+.book-cover{
+    max-height: 250px;
+    object-fit: cover;
+    min-height: 250px;
+
 }
