@@ -1,6 +1,8 @@
 const container = document.querySelector('#cardContainer');
 const input = document.querySelector('#inputId');
 const button = document.querySelector('#searchBtn');
+const cartContent = document.querySelector('#cartContent');
+const buttonClearCart = document.querySelector('.btn-clear-cart');
 
 let books = [];
 const savedCart = JSON.parse(localStorage.getItem("cart"));
@@ -31,7 +33,6 @@ function generateCard(book) {
                 <button type="button" class="btn btn-primary" id="btn-${book.asin}">Aggiungi al carrello</button>
             </div>
         </div>`;
-
     container.append(cardContainer);
 
     const addToCartButton = cardContainer.querySelector(`#btn-${book.asin}`);
@@ -39,36 +40,67 @@ function generateCard(book) {
         cardContainer.classList.add('added-to-cart');
         cart.push(book);
 
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Qui aggiorno il modale
-        //updateCart(book);
+        writeToLocalStograge("cart", cart);
+        updateCartMarco();
     });
 }
+// salvare il carrelo in un array fittizio e se l'array è vuoto guardare il local storage
 
-// popolo il modale
-//function updateCart(book) {
-//    const cartList = document.querySelector('#cartList');
-//    const listItems = document.createElement('li');
-//    listItems.textContent = `${book.title} - ${book.price} €`;
-
-//    cartList.appendChild(listItems);
-//}
-
-const cartModal = document.querySelector('.btn-modal');
 const updateCartMarco = () => {
+    const savedCart = readFromLocalStorage("cart");
+    cartContent.innerHTML = "";
     if (savedCart) {
-        savedCart.forEach((cartItem) => {
-            const div = document.createElement('div');
-            div.innerHTML = `${cartItem.title} - ${cartItem.price} €`;
-            cartModal.appendChild(div);
+        savedCart.forEach((cartItem, index) => {
+            console.log(index);
+            createCartItem(cartItem, cartContent, index);
         });
     } else {
         const paragraph = document.createElement('p');
         paragraph.innerText = "Non ci sono elementi nel carrello";
-        cartModal.appendChild(paragraph);
+        cartContent.appendChild(paragraph);
     }
+
 };
+
+function createCartItem(cartItem, containerToAppend, index) {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'col-12');
+    div.innerHTML = `${cartItem.title} - ${cartItem.price}€`;
+    const button = document.createElement('button');
+    button.innerText = "Cancella elemento";
+    div.appendChild(button);
+    containerToAppend.appendChild(div);
+
+    button.addEventListener("click", () => {
+        removeItemFromCart(index)
+    })
+
+}
+
+function readFromLocalStorage(key) {
+    return JSON.parse(localStorage.getItem(key));
+}
+function writeToLocalStograge(key, value) {
+    return localStorage.setItem(key, JSON.stringify(value));
+}
+
+
+function removeItemFromCart(index) {
+    const savedCart = readFromLocalStorage("cart");
+    if (savedCart) {
+        savedCart.splice(index, 1)
+        writeToLocalStograge("cart", savedCart)
+        updateCartMarco();
+    }
+}
+
+updateCartMarco();
+
+
+buttonClearCart.addEventListener("click", () => {
+    localStorage.removeItem("cart");
+    updateCartMarco();
+})
 
 getBooks().then(books => {
     books.map((book) => generateCard(book));

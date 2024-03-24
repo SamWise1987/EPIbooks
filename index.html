@@ -27,12 +27,12 @@
                 <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
                 <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-                <div>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Open Cart
-                      </button>
-                </div>
             </ul>
+            <div>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Open Cart
+                  </button>
+            </div>
             
         </header>
         <div class="row">
@@ -49,15 +49,23 @@
         </div>
     </div>
 
-    <div class="modal-body">
-        <p>Libri selezionati</p>
-        <ul id="cartList">
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-    </div>
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="cartContent">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary btn-clear-cart" data-bs-dismiss="modal">CLear Cart</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
 
 
 
